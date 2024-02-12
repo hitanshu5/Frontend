@@ -1,0 +1,52 @@
+<!-- index.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Master - Login</title>
+    <style>
+        /* Your existing styles here */
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h2>Stock Master</h2>
+        <div id="message"></div>
+        <form id="loginForm">
+            <div class="input-group">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="input-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <button type="button" class="login-btn" onclick="handleLogin()">Login</button>
+        </form>
+    </div>
+
+    <script>
+        function handleLogin() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const messageElement = document.getElementById('message');
+
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', 'http://localhost:3000/login', true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        messageElement.innerHTML = 'User data saved successfully.';
+                    } else {
+                        messageElement.innerHTML = 'Error saving user data.';
+                    }
+                }
+            };
+            xhr.send(`username=${username}&password=${password}`);
+        }
+    </script>
+</body>
+</html>
